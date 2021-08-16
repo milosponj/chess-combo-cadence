@@ -12,7 +12,7 @@ import ChessCombo from "../../contracts/ChessCombo.cdc"
 
 transaction(compilationId: UInt32, combinationId: UInt32, quantity: UInt64, recipientAddr: Address) {
 
-    // Local variable for the topshot Admin object
+    // Local variable for the ChessCombo Admin object
     let adminRef: &ChessCombo.Admin
 
     prepare(acct: AuthAccount) {

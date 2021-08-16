@@ -1,11 +1,11 @@
 //start_new_series.cdc
 import ChessCombo from "../../contracts/ChessCombo.cdc"
 
-// This transaction is for an Admin to start a new Top Shot series
+// This transaction is for an Admin to start a new ChessCombo series
 
 transaction {
 
-    // Local variable for the topshot Admin object
+    // Local variable for the ChessCombo Admin object
     let adminRef: &ChessCombo.Admin
 
     prepare(acct: AuthAccount) {

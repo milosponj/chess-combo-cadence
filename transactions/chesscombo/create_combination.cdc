@@ -8,7 +8,7 @@ import ChessCombo from "../../contracts/ChessCombo.cdc"
 
 transaction(metadata: {String: String}) {
 
-    // Local variable for the topshot Admin object
+    // Local variable for the ChessCombo Admin object
     let adminRef: &ChessCombo.Admin
 
     prepare(acct: AuthAccount) {

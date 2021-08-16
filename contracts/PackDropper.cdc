@@ -3,11 +3,12 @@
 
     Description: Contract definitions for users to buy packs
 
-    Honest attempt at writing a contract that handles pack buying and adding new packs
+    Contract that handles pack buying and adding new packs
 
 */
 import FungibleToken from "./FungibleToken.cdc"
-import Chessible from "./Chessible.cdc"
+import FungibleToken from "./FUSD.cdc"
+
 pub contract PackDropper {  
     pub event ContractInitialized()
     pub event PackAdded(id: UInt32, name: String, size: Int, price: UFix64, availableFrom: UFix64)
@@ -110,10 +111,10 @@ pub contract PackDropper {
                  //TODO getCurrentBlock().timestamp > self.packStats[packId]!.availableFromTimeStamp : "Pack selling not enabled yet!"
                 self.packStats[packId]!.buyers.length < (self.packStats[packId]!.size as Int) : "All packs are bought"
                 self.owner != nil :"Owner cant be nil"
-                self.owner!.getCapability<&Chessible.Vault{FungibleToken.Receiver}>(Chessible.ReceiverPublicPath).borrow() != nil : "chessible receiver cant be nil"  
+                self.owner!.getCapability<&FUSD.Vault{FungibleToken.Receiver}>(/public/fusdReceiver).borrow() != nil : "FUSD receiver cant be nil"  
             }      
 
-            let ownerReceiverVault = self.owner!.getCapability<&Chessible.Vault{FungibleToken.Receiver}>(Chessible.ReceiverPublicPath).borrow()!
+            let ownerReceiverVault = self.owner!.getCapability<&FUSD.Vault{FungibleToken.Receiver}>(/public/fusdReceiver).borrow()!
 
             ownerReceiverVault.deposit(from: <- buyerPayment)
             
