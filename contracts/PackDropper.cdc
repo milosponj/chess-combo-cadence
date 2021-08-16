@@ -7,7 +7,7 @@
 
 */
 import FungibleToken from "./FungibleToken.cdc"
-import FungibleToken from "./FUSD.cdc"
+import FUSD from "./FUSD.cdc"
 
 pub contract PackDropper {  
     pub event ContractInitialized()
