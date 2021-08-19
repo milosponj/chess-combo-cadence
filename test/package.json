@@ -8,7 +8,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/onflow/kitty-items.git"
+		"url": "git+https://github.com/milosponj/chess-combo-cadence"
 	},
 	"author": "Milos Ponjavusic",
 	"license": "Unknown",

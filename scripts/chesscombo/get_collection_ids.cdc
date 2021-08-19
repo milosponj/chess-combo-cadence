@@ -6,7 +6,7 @@ import ChessCombo from "../../contracts/ChessCombo.cdc"
 pub fun main(address: Address): [UInt64] {
     let account = getAccount(address)
 
-    let collectionRef = account.getCapability(ChessCombo.CollectionPublicPath).borrow<&{ChessCombo.ComboCollectionPublic}>()
+    let collectionRef = account.getCapability(ChessCombo.CollectionPublicPath)!.borrow<&{NonFungibleToken.CollectionPublic}>()
         ?? panic("Could not borrow capability from public collection")
     
     return collectionRef.getIDs()

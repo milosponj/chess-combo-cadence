@@ -71,7 +71,7 @@ pub contract NFTStorefront {
     // SaleOfferCompleted
     // The sale offer has been resolved. It has either been accepted, or removed and destroyed.
     //
-    pub event SaleOfferCompleted(saleOfferResourceID: UInt64, storefrontResourceID: UInt64, accepted: Bool)
+    pub event SaleOfferCompleted(saleOfferResourceID: UInt64, storefrontResourceID: UInt64, nftID: UInt64, accepted: Bool)
 
     // StorefrontStoragePath
     // The location in storage that a Storefront resource should be located.
@@ -284,6 +284,7 @@ pub contract NFTStorefront {
             emit SaleOfferCompleted(
                 saleOfferResourceID: self.uuid,
                 storefrontResourceID: self.details.storefrontID,
+                nftID: self.details.nftID,
                 accepted: self.details.accepted
             )
 
@@ -302,6 +303,7 @@ pub contract NFTStorefront {
                 emit SaleOfferCompleted(
                     saleOfferResourceID: self.uuid,
                     storefrontResourceID: self.details.storefrontID,
+                    nftID: self.details.nftID,
                     accepted: self.details.accepted
                 )
             }
