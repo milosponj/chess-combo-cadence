@@ -1,6 +1,6 @@
 import PackDropper from "../../contracts/PackDropper.cdc"
 import FungibleToken from "../../contracts/FungibleToken.cdc"
-import Chessible from "../../contracts/Chessible.cdc"
+import FUSD from "../../contracts/FUSD.cdc"
 
 transaction(itemID: UInt32, packsHandlerAddress: Address) {
     let packsHandler: &PackDropper.PacksHandler{PackDropper.PackPurchaser}
@@ -15,8 +15,8 @@ transaction(itemID: UInt32, packsHandlerAddress: Address) {
 
         let packPrice = self.packsHandler.getPackPrice(packId: itemID)
 
-        let mainChessibbleVault = signer.borrow<&Chessible.Vault>(from: Chessible.VaultStoragePath)
-            ?? panic("Cannot borrow Chessible vault from acct storage")
+        let mainChessibbleVault = signer.borrow<&FUSD.Vault>(from: /storage/fusdVault)
+            ?? panic("Cannot borrow FUSD vault from acct storage")
         let paymentVault <- mainChessibbleVault.withdraw(amount: packPrice)
 
         self.packsHandler.buyPack(packId: itemID, buyerPayment: <-paymentVault, buyerAddress: signer.address)
