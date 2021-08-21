@@ -15,9 +15,9 @@ transaction(itemID: UInt32, packsHandlerAddress: Address) {
 
         let packPrice = self.packsHandler.getPackPrice(packId: itemID)
 
-        let mainChessibbleVault = signer.borrow<&FUSD.Vault>(from: /storage/fusdVault)
+        let mainFusdVault = signer.borrow<&FUSD.Vault>(from: /storage/fusdVault)
             ?? panic("Cannot borrow FUSD vault from acct storage")
-        let paymentVault <- mainChessibbleVault.withdraw(amount: packPrice)
+        let paymentVault <- mainFusdVault.withdraw(amount: packPrice)
 
         self.packsHandler.buyPack(packId: itemID, buyerPayment: <-paymentVault, buyerAddress: signer.address)
     }

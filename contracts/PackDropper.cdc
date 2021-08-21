@@ -1,9 +1,7 @@
 /*
     PackSeller.cdc
 
-    Description: Contract definitions for users to buy packs
-
-    Contract that handles pack buying and adding new packs
+    Description: Contract for pack buying and adding new packs  
 
 */
 import FungibleToken from "./FungibleToken.cdc"
@@ -27,14 +25,16 @@ pub contract PackDropper {
         pub let price: UFix64
         pub let availableFromTimeStamp: UFix64
         pub let buyers: [Address]
+        pub let paymentVaultType: Type
 
-        init(name: String, size: Int, price: UFix64, availableFrom: UFix64) {
+        init(name: String, size: Int, price: UFix64, availableFrom: UFix64, vaultType: Type) {
             self.id = PackDropper.currentPackId
             self.name = name
             self.size = size
             self.price = price
             self.availableFromTimeStamp = availableFrom
             self.buyers = []
+            self.paymentVaultType = vaultType
             // Increment the ID so that it isn't used again
             PackDropper.currentPackId = PackDropper.currentPackId + (1 as UInt32)            
         }
@@ -53,28 +53,26 @@ pub contract PackDropper {
         pub fun getPackBuyers(packId:UInt32) : [Address]
     }
 
-     // PacksInfo
+    // PacksInfo
     // An interface to allow checking information about packs in the account
     pub resource interface PacksInfo {        
         pub fun getIDs() : [UInt32]
     }
 
     // PacksHandler
-    // Resource that an admin or something similar would own to be
-    // able to handle packs
-    //
+    // Resource that an admin would own to be able to handle packs
 	pub resource PacksHandler : PackPurchaser, PacksInfo {
 
 		access(self) var packStats: {UInt32: PackData}
 
-		pub fun addPack(name: String, size: Int, price: UFix64, availableFrom: UFix64) {
+		pub fun addPack(name: String, size: Int, price: UFix64, availableFrom: UFix64, vaultType: Type) {
         pre {
-            //TODO availableFrom > getCurrentBlock().timestamp 
+            availableFrom > getCurrentBlock().timestamp 
             name.length > 0 : "Pack must have a name"
             size > 0 : "Size must be positive number"
             price > 0.0 : "Price must be greater than zero"
         }
-            let pack = PackData(name: name, size: size, price:price, availableFrom: availableFrom)
+            let pack = PackData(name: name, size: size, price:price, availableFrom: availableFrom, vaultType: vaultType)
             self.packStats[pack.id] = pack
             emit PackAdded(id: pack.id, name: name, size: size, price: price, availableFrom: availableFrom)
 		}
@@ -108,7 +106,8 @@ pub contract PackDropper {
             pre {
                 self.packStats[packId] != nil: "Pack does not exist in the collection!"
                 buyerPayment.balance == self.packStats[packId]!.price : "payment does not equal the price of the pack"
-                 //TODO getCurrentBlock().timestamp > self.packStats[packId]!.availableFromTimeStamp : "Pack selling not enabled yet!"
+                buyerPayment.isInstance(self.packStats[packId]!.paymentVaultType)
+                getCurrentBlock().timestamp > self.packStats[packId]!.availableFromTimeStamp : "Pack selling not enabled yet!"
                 self.packStats[packId]!.buyers.length < (self.packStats[packId]!.size as Int) : "All packs are bought"
                 self.owner != nil :"Owner cant be nil"
                 self.owner!.getCapability<&FUSD.Vault{FungibleToken.Receiver}>(/public/fusdReceiver).borrow() != nil : "FUSD receiver cant be nil"  
