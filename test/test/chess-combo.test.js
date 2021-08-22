@@ -29,26 +29,20 @@ describe("Chess Combo", () => {
 		const basePath = path.resolve(__dirname, "../../");
 		const port = 8080;
 		await init(basePath, port);
-		return await emulator.start(port, false);
+		await emulator.start(port, false);
+		await deployChessCombo();
+		const ChessComboAdmin = await getChessComboAdminAddress();
+		return await setupChessComboOnAccount(ChessComboAdmin);
 	});
 
 	// Stop emulator, so it could be restarted
 	afterEach(async () => {
-		await new Promise((resolve) => setTimeout(resolve, 300));
 		await emulator.stop();
 		await new Promise((resolve) => setTimeout(resolve, 300));
 	});
 
-	it("shall deploy ChessCombo contract", async () => {
-		await shallPass(deployChessCombo());
-	});
-
 	it("supply shall be 0 after contract is deployed", async () => {
 		// Setup
-		await deployChessCombo();
-		const ChessComboAdmin = await getChessComboAdminAddress();
-		await shallPass(setupChessComboOnAccount(ChessComboAdmin));
-
 		await shallResolve(async () => {
 			const supply = await getChessComboSupply();
 			expect(supply).toBe(0);
@@ -56,10 +50,6 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall start new series", async () => {
-		await deployChessCombo();
-		const ChessComboAdmin = await getChessComboAdminAddress();
-		await shallPass(setupChessComboOnAccount(ChessComboAdmin));
-
 		await shallPass(startNewSeries());
 
 		await shallResolve(async () => {
@@ -69,9 +59,6 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall create a new compilation", async () => {
-		await deployChessCombo();
-		const ChessComboAdmin = await getChessComboAdminAddress();
-		await shallPass(setupChessComboOnAccount(ChessComboAdmin));
 		await shallPass(startNewSeries());
 
 		await shallPass(createCompilation("test"));
@@ -83,9 +70,6 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall create a new combination", async () => {
-		await deployChessCombo();
-		const ChessComboAdmin = await getChessComboAdminAddress();
-		await shallPass(setupChessComboOnAccount(ChessComboAdmin));
 		await shallPass(startNewSeries());
 
 		await shallPass(
@@ -99,10 +83,6 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall add a combination to compilation", async () => {
-		// Arrange
-		await deployChessCombo();
-		const ChessComboAdmin = await getChessComboAdminAddress();
-		await shallPass(setupChessComboOnAccount(ChessComboAdmin));
 		await shallPass(startNewSeries());
 		await shallPass(createCompilation("test"));
 		await shallPass(
@@ -123,8 +103,6 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall mint a combo", async () => {
-		// Arrange
-		await deployChessCombo();
 		const Alice = await getAccountAddress("Alice");
 		await setupChessComboOnAccount(Alice);
 		await shallPass(startNewSeries());
@@ -143,8 +121,6 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall not be able to withdraw an NFT that doesn't exist in a collection", async () => {
-		// Setup
-		await deployChessCombo();
 		const Alice = await getAccountAddress("Alice");
 		const Bob = await getAccountAddress("Bob");
 		await setupChessComboOnAccount(Alice);
@@ -155,7 +131,6 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall be able to withdraw an NFT and deposit to another accounts collection", async () => {
-		await deployChessCombo();
 		const Alice = await getAccountAddress("Alice");
 		const Bob = await getAccountAddress("Bob");
 		await setupChessComboOnAccount(Alice);
