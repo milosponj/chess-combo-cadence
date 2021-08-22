@@ -13,7 +13,7 @@ describe("Pack dropper", () => {
 		const basePath = path.resolve(__dirname, "../../");
 		const port = 8084;
 		init(basePath, port);
-		return emulator.start(port, false);
+		return emulator.start(port, true);
 	});
 	// Stop emulator, so it could be restarted
 	afterEach(async () => {
@@ -21,7 +21,7 @@ describe("Pack dropper", () => {
 	});
 
 	it("shall deploy PackDropper contract", async () => {
-		await shallPass(deployPackDropper());
+		await shallRevert(deployPackDropper());
 	});
 	// it("shall not have any packs at start", async () => {
 	// 	const ChessComboAdminAddress = await getChessComboAdminAddress();
