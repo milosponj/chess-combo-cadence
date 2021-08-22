@@ -28,13 +28,14 @@ describe("Chess Combo", () => {
 	beforeEach(async () => {
 		const basePath = path.resolve(__dirname, "../../");
 		const port = 8080;
-		init(basePath, port);
-		return await emulator.start(port, false);
+		await init(basePath, port);
+		return await emulator.start(port, true);
 	});
 
 	// Stop emulator, so it could be restarted
 	afterEach(async () => {
-		return await emulator.stop();
+		await emulator.stop();
+		await new Promise((resolve) => setTimeout(resolve, 100));
 	});
 
 	it("shall deploy ChessCombo contract", async () => {
