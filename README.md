@@ -2,6 +2,8 @@
 
 Repo that contains flow contracts for chess combo
 
+- Tests are failing only in CI, but work locally. Related issue: https://github.com/onflow/flow-js-testing/issues/47
+
 # Running tests
 
 `cd test`
