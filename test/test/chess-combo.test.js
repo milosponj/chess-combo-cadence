@@ -27,7 +27,7 @@ describe("Chess Combo", () => {
 	// Instantiate emulator and path to Cadence files
 	beforeEach(async () => {
 		const basePath = path.resolve(__dirname, "../../");
-		const port = 8084;
+		const port = 8080;
 		init(basePath, port);
 		return emulator.start(port, true);
 	});
