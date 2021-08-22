@@ -29,12 +29,12 @@ describe("Chess Combo", () => {
 		const basePath = path.resolve(__dirname, "../../");
 		const port = 8080;
 		init(basePath, port);
-		return emulator.start(port, true);
+		return await emulator.start(port, true);
 	});
 
 	// Stop emulator, so it could be restarted
 	afterEach(async () => {
-		return emulator.stop();
+		return await emulator.stop();
 	});
 
 	it("shall deploy ChessCombo contract", async () => {
@@ -53,18 +53,18 @@ describe("Chess Combo", () => {
 		});
 	});
 
-	// it("shall start new series", async () => {
-	// 	await deployChessCombo();
-	// 	const ChessComboAdmin = await getChessComboAdminAddress();
-	// 	await shallPass(setupChessComboOnAccount(ChessComboAdmin));
+	it("shall start new series", async () => {
+		await deployChessCombo();
+		const ChessComboAdmin = await getChessComboAdminAddress();
+		await shallPass(setupChessComboOnAccount(ChessComboAdmin));
 
-	// 	await shallPass(startNewSeries());
+		await shallPass(startNewSeries());
 
-	// 	await shallResolve(async () => {
-	// 		const currentSeries = await getCurrentSeries();
-	// 		expect(currentSeries).toBe(1);
-	// 	});
-	// });
+		await shallResolve(async () => {
+			const currentSeries = await getCurrentSeries();
+			expect(currentSeries).toBe(1);
+		});
+	});
 
 	// it("shall create a new compilation", async () => {
 	// 	await deployChessCombo();
