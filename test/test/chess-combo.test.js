@@ -29,7 +29,7 @@ describe("Chess Combo", () => {
 		const basePath = path.resolve(__dirname, "../../");
 		const port = 8080;
 		init(basePath, port);
-		return await emulator.start(port, true);
+		return await emulator.start(port, false);
 	});
 
 	// Stop emulator, so it could be restarted
