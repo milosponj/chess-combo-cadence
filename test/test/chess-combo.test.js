@@ -35,7 +35,7 @@ describe("Chess Combo", () => {
 	// Stop emulator, so it could be restarted
 	afterEach(async () => {
 		await emulator.stop();
-		await new Promise((resolve) => setTimeout(resolve, 100));
+		await new Promise((resolve) => setTimeout(resolve, 300));
 	});
 
 	it("shall deploy ChessCombo contract", async () => {
