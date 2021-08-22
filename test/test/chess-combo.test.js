@@ -31,10 +31,8 @@ describe("Chess Combo", () => {
 		await init(basePath, port);
 		await emulator.start(port, true);
 		await deployChessCombo();
-		await new Promise((resolve) => setTimeout(resolve, 300));
 		const ChessComboAdmin = await getChessComboAdminAddress();
-		await setupChessComboOnAccount(ChessComboAdmin);
-		return new Promise((resolve) => setTimeout(resolve, 300));
+		return await setupChessComboOnAccount(ChessComboAdmin);
 	});
 
 	// Stop emulator, so it could be restarted
