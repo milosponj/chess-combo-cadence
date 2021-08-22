@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     timeout-minutes: 10
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Install Flow CLI
-        run: iex "& { $(irm 'https://storage.googleapis.com/flow-cli/install.ps1') }"
+        run: sh -ci "$(curl -fsSL https://storage.googleapis.com/flow-cli/install.sh)"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
