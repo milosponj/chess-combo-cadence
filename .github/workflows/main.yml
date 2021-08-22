@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     
     strategy:
@@ -20,6 +21,8 @@ jobs:
       # Check-out repository under $GITHUB_WORKSPACE
       - name: Checkout repo
         uses: actions/checkout@v2
+      - name: Install Flow CLI
+        run: sh -ci "$(curl -fsSL https://storage.googleapis.com/flow-cli/install.sh)"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
