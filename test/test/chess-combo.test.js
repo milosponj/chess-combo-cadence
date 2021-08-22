@@ -29,9 +29,8 @@ describe("Chess Combo", () => {
 		const basePath = path.resolve(__dirname, "../../");
 		const port = 8080;
 		await init(basePath, port);
-		await emulator.start(port, true);
+		await emulator.start(port, false);
 		await deployChessCombo();
-		await new Promise((resolve) => setTimeout(resolve, 300));
 		const ChessComboAdmin = await getChessComboAdminAddress();
 		await setupChessComboOnAccount(ChessComboAdmin);
 		return new Promise((resolve) => setTimeout(resolve, 300));
