@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   workflow_dispatch:
 
@@ -12,7 +12,7 @@ jobs:
   build:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [14.x]
@@ -29,7 +29,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
         working-directory: test
+
+      - name: Update PATH
+        run: echo "/root/.local/bin" >> $GITHUB_PATH
+
       - name: run tests
         run: npm run test:github
         working-directory: test
-      
