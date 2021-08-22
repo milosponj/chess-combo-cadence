@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: run test
-        run: npm test:github
+      - name: run tests
+        run: npm run test:github
         working-directory: test
       
