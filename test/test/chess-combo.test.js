@@ -29,7 +29,7 @@ describe("Chess Combo", () => {
 		const basePath = path.resolve(__dirname, "../../");
 		const port = 8080;
 		init(basePath, port);
-		return emulator.start(port, true);
+		return emulator.start(port, false);
 	});
 
 	// Stop emulator, so it could be restarted
@@ -41,17 +41,17 @@ describe("Chess Combo", () => {
 		await shallPass(deployChessCombo());
 	});
 
-	// it("supply shall be 0 after contract is deployed", async () => {
-	// 	// Setup
-	// 	await deployChessCombo();
-	// 	const ChessComboAdmin = await getChessComboAdminAddress();
-	// 	await shallPass(setupChessComboOnAccount(ChessComboAdmin));
+	it("supply shall be 0 after contract is deployed", async () => {
+		// Setup
+		await deployChessCombo();
+		const ChessComboAdmin = await getChessComboAdminAddress();
+		await shallPass(setupChessComboOnAccount(ChessComboAdmin));
 
-	// 	await shallResolve(async () => {
-	// 		const supply = await getChessComboSupply();
-	// 		expect(supply).toBe(0);
-	// 	});
-	// });
+		await shallResolve(async () => {
+			const supply = await getChessComboSupply();
+			expect(supply).toBe(0);
+		});
+	});
 
 	// it("shall start new series", async () => {
 	// 	await deployChessCombo();
