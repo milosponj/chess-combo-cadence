@@ -7,7 +7,7 @@ import { getChessComboAdminAddress, toUFix64 } from "../src/common";
 // We need to set timeout for a higher number, because some transactions might take up some time
 jest.setTimeout(50000);
 
-describe("Pack Handler", () => {
+describe("Pack dropper", () => {
 	// Instantiate emulator and path to Cadence files
 	beforeEach(async () => {
 		const basePath = path.resolve(__dirname, "../../");
