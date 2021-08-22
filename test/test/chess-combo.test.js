@@ -38,7 +38,7 @@ describe("Chess Combo", () => {
 	});
 
 	it("shall deploy ChessCombo contract", async () => {
-		await shallPass(await deployChessCombo());
+		await shallPass(deployChessCombo());
 	});
 
 	// it("supply shall be 0 after contract is deployed", async () => {

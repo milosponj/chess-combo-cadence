@@ -21,7 +21,7 @@ describe("Pack dropper", () => {
 	});
 
 	it("shall deploy PackDropper contract", async () => {
-		await shallPass(await deployPackDropper());
+		await shallPass(deployPackDropper());
 	});
 	// it("shall not have any packs at start", async () => {
 	// 	const ChessComboAdminAddress = await getChessComboAdminAddress();
