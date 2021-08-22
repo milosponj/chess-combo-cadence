@@ -2,6 +2,11 @@
 
 Repo that contains flow contracts for chess combo
 
+# Running tests
+
+`cd test`
+`npm run test`
+
 # Process for creating a new test account
 
 1. First generate new keys

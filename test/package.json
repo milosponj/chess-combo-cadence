@@ -4,7 +4,8 @@
 	"description": "Tests for Chess Combo using Flow JS Testing Framework",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest --watch"
+		"test": "jest --watch",
+		"test:github": "jest"
 	},
 	"repository": {
 		"type": "git",
