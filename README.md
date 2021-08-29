@@ -30,7 +30,7 @@ All contracts on testnet are deployed to: `0x5a2c15468a922d26`
 - Application is deployed to Azure
 - This repo is only concerned with the contracts deployed to flow (middle part of the image below)
 
-[Top level architecture](\.github\top-level-architecture.jpg)
+[Top level architecture](https://github.com/milosponj/chess-combo-cadence/blob/master/.github/top-level-architecture.jpg?raw=true)
 
 ### Running tests
 
