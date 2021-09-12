@@ -811,8 +811,8 @@ pub contract ChessCombo: NonFungibleToken {
         self.totalSupply = 0
 
         //Initialize storage paths
-        self.CollectionStoragePath = /storage/ComboCollection
-        self.CollectionPublicPath = /public/ComboCollection
+        self.CollectionStoragePath = /storage/ChessComboCollection
+        self.CollectionPublicPath = /public/ChessComboCollection
         self.ChessComboAdminStoragePath = /storage/ChessComboAdmin
 
         // Put a new Collection in storage
