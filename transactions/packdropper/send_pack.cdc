@@ -14,7 +14,7 @@ transaction(recipientAddress: Address, comboIds: [UInt64]) {
           
           prepare(acct: AuthAccount) {
       
-              self.transferTokens <- acct.borrow<&ChessCombo.Collection>(from: /storage/ComboCollection)!.batchWithdraw(ids: comboIds)
+              self.transferTokens <- acct.borrow<&ChessCombo.Collection>(from: /storage/ChessComboCollection)!.batchWithdraw(ids: comboIds)
           }
       
           execute {
@@ -23,7 +23,7 @@ transaction(recipientAddress: Address, comboIds: [UInt64]) {
               let recipient = getAccount(recipientAddress)
       
               // get the Collection reference for the receiver
-              let receiverRef = recipient.getCapability(/public/ComboCollection).borrow<&{ChessCombo.ComboCollectionPublic}>()
+              let receiverRef = recipient.getCapability(/public/ChessComboCollection).borrow<&{ChessCombo.ComboCollectionPublic}>()
                   ?? panic("Could not borrow a reference to the recipients moment receiver")
       
               // deposit the NFT in the receivers collection
