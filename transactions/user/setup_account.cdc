@@ -2,7 +2,6 @@ import FungibleToken from "../../contracts/FungibleToken.cdc"
 import NonFungibleToken from "../../contracts/NonFungibleToken.cdc"
 import FUSD from "../../contracts/FUSD.cdc"
 import ChessCombo from "../../contracts/ChessCombo.cdc"
-import NFTStorefront from "../../contracts/NFTStorefront.cdc"
 
   pub fun hasFUSD(_ address: Address): Bool {
     let receiver = getAccount(address)
@@ -18,11 +17,7 @@ import NFTStorefront from "../../contracts/NFTStorefront.cdc"
       .getCapability<&ChessCombo.Collection{NonFungibleToken.CollectionPublic, ChessCombo.ComboCollectionPublic}>(ChessCombo.CollectionPublicPath)
       .check()
   }
-  pub fun hasStorefront(_ address: Address): Bool {
-    return getAccount(address)
-      .getCapability<&NFTStorefront.Storefront{NFTStorefront.StorefrontPublic}>(NFTStorefront.StorefrontPublicPath)
-      .check()
-  }
+
   transaction {
     prepare(acct: AuthAccount) {
       if !hasFUSD(acct.address) {
@@ -40,13 +35,6 @@ import NFTStorefront from "../../contracts/NFTStorefront.cdc"
         }
         acct.unlink(ChessCombo.CollectionPublicPath)
         acct.link<&ChessCombo.Collection{NonFungibleToken.CollectionPublic, ChessCombo.ComboCollectionPublic}>(ChessCombo.CollectionPublicPath, target: ChessCombo.CollectionStoragePath)
-      }
-      if !hasStorefront(acct.address) {
-        if acct.borrow<&NFTStorefront.Storefront>(from: NFTStorefront.StorefrontStoragePath) == nil {
-          acct.save(<-NFTStorefront.createStorefront(), to: NFTStorefront.StorefrontStoragePath)
-        }
-        acct.unlink(NFTStorefront.StorefrontPublicPath)
-        acct.link<&NFTStorefront.Storefront{NFTStorefront.StorefrontPublic}>(NFTStorefront.StorefrontPublicPath, target: NFTStorefront.StorefrontStoragePath)
       }
     }
   }
